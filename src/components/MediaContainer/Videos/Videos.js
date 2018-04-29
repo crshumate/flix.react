@@ -8,6 +8,7 @@ import ToggleDisplay from 'Common/ToggleDisplay';
 import VideoPlaylistContent from './VideoPlaylistContent';
 import IconButton from 'material-ui/IconButton';
 import ClearIcon from 'material-ui-icons/Backspace';
+import ReloadIcon from 'material-ui-icons/Refresh';
 
 class Videos extends Component {
     constructor(props) {
@@ -40,6 +41,10 @@ class Videos extends Component {
         });
     };
 
+    reload(){
+         this.props.getVideos();
+     };
+
     static getDerivedStateFromProps(newProps) {
         return {
             showPlaylists: newProps.videos
@@ -52,14 +57,21 @@ class Videos extends Component {
 
         return (
             <Fragment>
-                
-                <Grid container spacing={8} className={classes.gridWrapper}>
-                    <ToggleDisplay if={this.state.activePlaylistTitle && props.activePlaylistTitle === props.title}>
+                <Grid container className={classes.videoControls}>
+                    <Grid item>
+                        <ToggleDisplay if={this.state.activePlaylistTitle && props.activePlaylistTitle === props.title}>
+                                <IconButton classes={{root:classes.clearIconWrapper}}>
+                                    <ClearIcon onClick={()=>this.clearActivePlaylist()} className={classes.clearIcon} />
+                                </IconButton>
+                        </ToggleDisplay>
+                    </Grid>
+                    <Grid item>
                             <IconButton classes={{root:classes.clearIconWrapper}}>
-                                <ClearIcon onClick={()=>this.clearActivePlaylist()} className={classes.clearIcon} />
+                                <ReloadIcon onClick={()=>this.reload()} className={classes.clearIcon} />
                             </IconButton>
-                    </ToggleDisplay>
-
+                    </Grid>
+                </Grid> 
+                <Grid container spacing={8} className={classes.gridWrapper}>
                     <Repeat 
                         dataToMap={state.showPlaylists}
                         if={state.showPlaylists && state.showPlaylists.length} 

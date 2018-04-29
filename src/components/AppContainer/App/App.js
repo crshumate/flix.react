@@ -2,12 +2,14 @@ import React, { Fragment, Component } from 'react';
 import injectSheet from 'react-jss';
 import CssBaseline from 'material-ui/CssBaseline';
 import AppRouter from 'Components/AppContainer/AppRouter';
+import Loader from 'Common/Loader';
 import appStyles from './app.style';
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state={
+            isLoading:props.isLoading,
             loadedComponent:null,
             params:props.match.params
         };
@@ -39,7 +41,8 @@ class App extends Component {
 
     static getDerivedStateFromProps(newProps,prevState) {
         return{
-            params:newProps.match.params
+            params:newProps.match.params,
+            isLoading:newProps.isLoading
         }
     };
 
@@ -52,12 +55,13 @@ class App extends Component {
     render() {
         
         let LoadedComponent = this.state.loadedComponent;
-        let props = this.props;
+        let {props, state} = this;
 
         return (
             <Fragment>
                 <CssBaseline />
                 <AppRouter {...props}  />
+                <Loader isLoading={state.isLoading} />
                {LoadedComponent ? <LoadedComponent {...props} />:null}
             </Fragment>
         );
