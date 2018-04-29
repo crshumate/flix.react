@@ -1,7 +1,9 @@
+const pkgJson = require("../../../package.json");
+
 export default {
     persisted:true,
     whiteList:["version"],
     isLoading:false,
     pendingAjaxCalls:0,
-    version:"1.0.0"
+    version:pkgJson.version
 };

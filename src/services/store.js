@@ -146,9 +146,19 @@ const store = {
             }
 
             return persistedState;
-        }
+        },
+        _invalidateCache: (cachedState) => {
+            let invalidateCache = false;
+            if (cachedState.app && cachedState.app.version) {
+                if (store._initialStates.app.version !== cachedState.app.version) {
+                    invalidateCache = true;
+                }
+            } else {
+                invalidateCache = true;
+            }
+            return invalidateCache;
+        },
     },
-
     update: (redux) => {
         let currentState = redux.getState();
         let stateToPersist = store._helpers._persistFilter(currentState);
@@ -165,7 +175,8 @@ const store = {
     loadState: () => {
         let persistedState = LocalStorage.loadState();
         if (persistedState) {
-            if (store._invalidateCache(persistedState)) {
+            if (store._helpers._invalidateCache(persistedState)) {
+                console.log('invalidating cache');
                 persistedState = store._initialStates;
             } else {
                 persistedState = store._helpers._addInitialStateValues(persistedState);
@@ -183,18 +194,6 @@ const store = {
             ...state,
             [stateKey]: action[stateKey]
         };
-    },
-    _invalidateCache: (cachedState) => {
-        let invalidateCache = false;
-        if (cachedState.app && cachedState.app.version) {
-            if (store._initialStates.app.version !== cachedState.app.version) {
-                invalidateCache = true;
-            }
-        } else {
-            invalidateCache = true;
-        }
-        console.log(invalidateCache);
-        return invalidateCache;
     }
 }
 
