@@ -2,7 +2,7 @@ import LocalStorage from "./localStorage";
 import initialStates from "InitialStates";
 
 const store = {
-    _initialStates:initialStates,
+    _initialStates: initialStates,
     _oldStore: null,
     _helpers: {
         _storeChanged: (currentStore) => {
@@ -151,7 +151,7 @@ const store = {
 
     update: (redux) => {
         let currentState = redux.getState();
-        let stateToPersist = store._helpers._persistFilter(currentState)
+        let stateToPersist = store._helpers._persistFilter(currentState);
         let stringifiedStore = JSON.stringify(stateToPersist);
 
         if (store._helpers._storeChanged(stringifiedStore)) {
@@ -165,9 +165,13 @@ const store = {
     loadState: () => {
         let persistedState = LocalStorage.loadState();
         if (persistedState) {
-            persistedState = store._helpers._addInitialStateValues(persistedState);
-        }
+            if (store._invalidateCache(persistedState)) {
+                persistedState = store._initialStates;
+            } else {
+                persistedState = store._helpers._addInitialStateValues(persistedState);
+            }
 
+        }
         return persistedState;
     },
     //this is the default reducer we use across all our reducers
@@ -179,6 +183,18 @@ const store = {
             ...state,
             [stateKey]: action[stateKey]
         };
+    },
+    _invalidateCache: (cachedState) => {
+        let invalidateCache = false;
+        if (cachedState.app && cachedState.app.version) {
+            if (store._initialStates.app.version !== cachedState.app.version) {
+                invalidateCache = true;
+            }
+        } else {
+            invalidateCache = true;
+        }
+        console.log(invalidateCache);
+        return invalidateCache;
     }
 }
 
