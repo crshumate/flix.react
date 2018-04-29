@@ -61,7 +61,7 @@ class App extends Component {
             <Fragment>
                 <CssBaseline />
                 <AppRouter {...props}  />
-                <Loader isLoading={state.isLoading} />
+                <Loader showLoader={state.isLoading} />
                {LoadedComponent ? <LoadedComponent {...props} />:null}
             </Fragment>
         );

@@ -58,7 +58,7 @@ const Loader = (props) => {
     }
     return (
         
-        <ToggleDisplay if={props.isLoading}>
+        <ToggleDisplay if={props.showLoader}>
             <div className={classes.loading}>
             <img className={classes.img} alt='loading' src="img/orangeLoading.gif" />
                 <div className={classes.background}></div>
