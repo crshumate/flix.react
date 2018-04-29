@@ -12,9 +12,9 @@ import ClearIcon from 'material-ui-icons/Backspace';
 class Videos extends Component {
     constructor(props) {
         super(props);
-        this.props.getShowVideos();
+        this.props.getVideos();
         this.state = {
-            showPlaylists: props.showPlaylists,
+            showPlaylists: props.videos,
             activePlaylistVideos:null,
             activePlaylistTitle:null
         };
@@ -42,7 +42,7 @@ class Videos extends Component {
 
     static getDerivedStateFromProps(newProps) {
         return {
-            showPlaylists: newProps.showPlaylists
+            showPlaylists: newProps.videos
         }
     };
 

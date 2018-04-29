@@ -51,7 +51,7 @@ const videos = {
         return promise;
 
     },
-    getShows: () => {
+    get: () => {
         let promise = new Promise((resolve, reject) => {
             videos.getPlaylists().then((playlists) => {
                 videos.getShowsFromPlayList(playlists).then((shows) => {

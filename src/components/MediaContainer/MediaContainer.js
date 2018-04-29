@@ -6,28 +6,16 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
     let props = {
-        musicVideos:state.videos.musicVideos,
-        danceVideos:state.videos.danceVideos,
-        showPlaylists:state.videos.showPlaylists,
-        educationalVideos:state.videos.educationalVideos
+        videos:state.videos.videos
     };
     return props;
 };
 
 const mapDispatchToProps = (dispatch, location) => {
     return {
-        /*getMusicVideos:()=>{
-            dispatch(videoGetActions.getMusicVideos());
-        },
-        getDanceVideos:()=>{
-            dispatch(videoGetActions.getDanceVideos());
-        },*/
-         getShowVideos:()=>{
-            dispatch(videoGetActions.getShowPlaylists());
-        }/*,
-        getEducationalVideos:()=>{
-            dispatch(videoGetActions.getEducationalVideos());
-        }*/
+         getVideos:()=>{
+            dispatch(videoGetActions.getVideos());
+        }
     }
 }
 

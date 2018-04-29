@@ -7,12 +7,12 @@ const incrementPendingAjaxCalls = appUpdateActions.updateIncrementPendingAjaxCal
 const decrementPendingAjaxCalls = appUpdateActions.updateDecrementPendingAjaxCalls;
 
 const actions = {
-    getShowPlaylists:()=>{
+    getVideos:()=>{
         return (dispatch) => {
             dispatch(incrementPendingAjaxCalls());
-          videos.getShows().then((showPlaylists)=>{
-            showPlaylists = sort.simpleSort(showPlaylists,"title","asc");
-            dispatch(videoSetActions.setShowPlaylists(showPlaylists))
+          videos.get().then((videoData)=>{
+            let sortedVideos = sort.simpleSort(videoData,"title","asc");
+            dispatch(videoSetActions.setVideos(sortedVideos))
           },(err)=>{
             console.log(err);
           }).then(()=>{
