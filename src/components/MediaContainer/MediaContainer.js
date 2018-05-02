@@ -1,20 +1,30 @@
 import Media from 'MediaContainer/Media/Media';
 import videoGetActions from 'Actions/videoActions/videoGetActions';
-//import gameGetActions from 'Actions/gameActions/gameGetActions';
+import videoSetActions from 'Actions/videoActions/videoSetActions';
 import { connect } from 'react-redux';
 
 
 const mapStateToProps = (state) => {
     let props = {
-        videos:state.videos.videos
+        playlists:state.videos.playlists,
+        videos: state.videos.videos
     };
     return props;
 };
 
 const mapDispatchToProps = (dispatch, location) => {
     return {
-         getVideos:()=>{
-            dispatch(videoGetActions.getVideos());
+        getPlaylists: () => {
+            dispatch(videoGetActions.getPlaylists());
+        },
+        getPlaylistItems: (data) => {
+            dispatch(videoGetActions.getPlaylistItems(data));
+        },
+        clearPlaylistsContent:() => {
+             dispatch(videoSetActions.clearVideoPlaylistsContent());
+        },
+        clearPlaylists:() => {
+             dispatch(videoSetActions.clearVideoPlaylists());
         }
     }
 }

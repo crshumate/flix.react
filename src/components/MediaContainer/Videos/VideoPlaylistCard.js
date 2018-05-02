@@ -18,7 +18,7 @@ const VideoPlaylist = (props) => {
                 <ToggleDisplay if={!props.activePlaylistTitle }>
                     <Grid item xs={12} sm={6} md={4}
                          className={`${classes.playlistCard}  ${videoPlaylistClass} ${activeClass}`} 
-                         onClick={()=>props.setActivePlaylist({videos:props.videos, title:props.title})} 
+                         onClick={()=>props.setActivePlaylist({id:props.id, title:props.title})} 
                     >
                         <Card>
                             <CardMedia

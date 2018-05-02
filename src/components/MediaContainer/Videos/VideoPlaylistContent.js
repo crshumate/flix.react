@@ -16,7 +16,6 @@ class VideoPlaylistContent extends Component{
     };
 
     openVideoModal = (id) => {
-        console.log(id);
         this.setState(() => {
             return {
                 showVideoModal: true,
@@ -52,7 +51,6 @@ class VideoPlaylistContent extends Component{
                         )}}
                     </Repeat>
                 </Grid> 
-
                 <ToggleDisplay if={state.showVideoModal}> 
                         <VideoModal 
                             {...props} 

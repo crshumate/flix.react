@@ -7,7 +7,6 @@ import Icon from 'material-ui/Icon';
 const VideoModal = (props) => {
 
     let { classes } = props;
-    console.log(props.videoId)
     return (
         <Fragment>
             <Modal

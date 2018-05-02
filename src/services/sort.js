@@ -11,7 +11,8 @@ const sort = {
         return { sortedResults, updatedSortHistory };
     },
     simpleSort:(arr,key,direction="desc")=>{
-        let sortedResults = deepSort(arr, key, direction);
+        let arrToSort = arr.slice();
+        let sortedResults = deepSort(arrToSort, key, direction);
         return sortedResults;
     },
     _getDirection: (sortHistory, key) => {

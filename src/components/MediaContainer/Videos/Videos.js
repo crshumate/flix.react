@@ -13,48 +13,87 @@ import ReloadIcon from 'material-ui-icons/Refresh';
 class Videos extends Component {
     constructor(props) {
         super(props);
-        this.props.getVideos();
+        this.props.getPlaylists();
         this.state = {
-            showPlaylists: props.videos,
-            activePlaylistVideos:null,
-            activePlaylistTitle:null
+            playlists: props.playlists,
+            activePlaylistTitle: null,
+            activePlaylistId: null,
+            playlistsContent: null,
+            loadedVideos: null
+
         };
     };
 
-
-    setActivePlaylist = (data) => { 
-        this.setState(()=>{
-            return{
-                activePlaylistVideos:data.videos,
-                activePlaylistTitle:data.title
-
+    setActivePlaylist = (data) => {
+        this.props.getPlaylistItems(data);
+        this.setState(() => {
+            return {
+                activePlaylistId: data.id,
+                activePlaylistTitle: data.title
             }
         });
     };
     clearActivePlaylist = () => {
-        this.setState(()=>{
-            return{
-                activePlaylistVideos:null,
-                activePlaylistTitle:null
+        this.setState(() => {
+            return {
+                loadedVideos: null,
+                activePlaylistTitle: null,
+                activePlaylistId: null
 
             }
         });
     };
 
-    reload(){
-         this.props.getVideos();
-     };
+    reload() {
+        this.setState(() => {
+            return {
+                playlists:null,
+                loadedVideos: null,
+                activePlaylistTitle: null,
+                activePlaylistId: null,
+                playlistsContent: null,
+
+            }
+        });
+        this.props.clearPlaylists();
+        this.props.clearPlaylistsContent();
+        this.props.getPlaylists();
+
+    };
+
+    setLoadedVideos() {
+
+        const playlistContent = this.state.playlistsContent.filter((content) => {
+            return content.id === this.state.activePlaylistId;
+        });
+        if (playlistContent.length) {
+            this.setState(() => {
+                return {
+                    loadedVideos: playlistContent[0].videos
+                }
+            });
+        }
+
+
+    };
 
     static getDerivedStateFromProps(newProps) {
         return {
-            showPlaylists: newProps.videos
+            playlists: newProps.playlists,
+            playlistsContent: newProps.videos
         }
+    };
+    componentDidUpdate(prevProps) {
+        if (prevProps !== this.props) {
+            this.setLoadedVideos();
+        }
+
+
     };
 
     render() {
         let { props, state } = this;
-        let {classes} = props;
-
+        let { classes } = props;
         return (
             <Fragment>
                 <Grid container className={classes.videoControls}>
@@ -73,35 +112,31 @@ class Videos extends Component {
                 </Grid> 
                 <Grid container spacing={8} className={classes.gridWrapper}>
                     <Repeat 
-                        dataToMap={state.showPlaylists}
-                        if={state.showPlaylists && state.showPlaylists.length} 
+                        dataToMap={state.playlists}
+                        if={state.playlists && state.playlists.length} 
                         > 
                         {(playlist,key)=>(
                             <VideoPlaylistCard 
                                 {...props}
-                                title={playlist.title}
+                                title={playlist.snippet.title}
+                                id={playlist.id}
                                 key={key}
-                                videos={playlist.items}
-                                img={playlist.img}
+                                img={playlist.snippet.thumbnails.high}
                                 setActivePlaylist={this.setActivePlaylist}
                                 activePlaylistTitle={this.state.activePlaylistTitle}
-                                showPlaylists = {this.state.showPlaylists}
 
                             />
 
                         )}
                    </Repeat>
                 </Grid>
-                    
-                <ToggleDisplay if={this.state.activePlaylistTitle}>
-                    <VideoPlaylistContent 
+                <ToggleDisplay if={this.state.loadedVideos && this.state.loadedVideos.length}>
+                   <VideoPlaylistContent 
                         {...props}
-                        videos={this.state.activePlaylistVideos}
+                        videos={this.state.loadedVideos}
                         openVideoModal={this.openVideoModal}
                         closeVideoModal={this.closeVideoModal}
                         showVideoModal={this.state.showVideoModal}
-                        videoId={this.state.videoYTId}
-
                         /> 
                 </ToggleDisplay>
 

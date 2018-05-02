@@ -1,4 +1,5 @@
 export default {
     persisted:true,
-    videos:[]
+    videos:[],
+    playlists:[]
 };

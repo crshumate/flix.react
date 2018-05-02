@@ -13,29 +13,18 @@ const videos = {
             url: path
         });
     },
-    getShowsFromPlayList: (playlists) => {
+    getPlaylistItems: (data) => {
         let promise = new Promise((resolve, reject) => {
-            let shows=[];
-            playlists.forEach((playlist,idx) => {
-                let path = `/playlistItems?playlistId=${playlist.id}&maxResults=50&part=snippet%2CcontentDetails&key=${YTApiKey}`
-                let playlistItemsReq = videos._process({ method: "GET", baseUrl: YTBaseUrl, path: path });
-                playlistItemsReq.then((data) => {
-                    shows.push({
-                        title: playlist.snippet.title,
-                        img: playlist.snippet.thumbnails.standard,
-                        items: data.data.items
-                    });
+            let path = `/playlistItems?playlistId=${data.id}&maxResults=50&part=snippet%2CcontentDetails&key=${YTApiKey}`
+            let playlistItemsReq = videos._process({ method: "GET", baseUrl: YTBaseUrl, path: path });
+            playlistItemsReq.then((res) => {
+                resolve({videos:res.data.items,title:data.title, id:data.id});
 
-                    //we've looped through everhthing.
-                    if(idx === playlists.length-1){
-                        resolve(shows);
-                    }
-                }, (err) => {});
-            });
+            }, (err) => {});
         });
         return promise
     },
-   
+
     getPlaylists: () => {
         let promise = new Promise((resolve, reject) => {
 
@@ -43,9 +32,9 @@ const videos = {
 
             let playlistReq = videos._process({ method: "GET", baseUrl: YTBaseUrl, path: path });
 
-            playlistReq.then((playlistData) => {                
-               resolve(playlistData.data.items);
-               
+            playlistReq.then((playlistData) => {
+                resolve(playlistData.data.items);
+
             });
         });
         return promise;
