@@ -3,10 +3,20 @@ import Modal from 'material-ui/Modal';
 import injectSheet from 'react-jss';
 import videoStyles from './video.style';
 import Icon from 'material-ui/Icon';
+import YouTube from 'react-youtube';
 
 const VideoModal = (props) => {
 
     let { classes } = props;
+    const opts = {
+      height: "85%",
+      width: "90%",
+      playerVars: { // https://developers.google.com/youtube/player_parameters
+        autoplay: 1,
+        modestbranding:1,
+        origin:window.location.origin
+      }
+    };
     return (
         <Fragment>
             <Modal
@@ -19,17 +29,12 @@ const VideoModal = (props) => {
                         <div onClick={()=>props.closeVideoModal()} className={classes.closeIconWrapper}>
                             <Icon>clear</Icon>
                         </div>
-                        <iframe 
-                            className={classes.iframedVideo}
-                            title="shuflix"
-                            id="ytplayer" 
-                            type="text/html" 
-                            width="90%" 
-                            height="85%"
-                            allowFullScreen
-                            src={`https://www.youtube.com/embed/${props.videoId}?autoplay=1&rel=0&origin=${window.location.origin}&modestbranding=1`}
-                            frameBorder="0">
-                        </iframe>
+                        <YouTube
+                             videoId={props.videoId}
+                             id="ytplayer"
+                             opts={opts}    
+                         />
+                            
                 </div>
 
                    
