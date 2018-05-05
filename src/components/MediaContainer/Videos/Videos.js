@@ -118,7 +118,7 @@ class Videos extends Component {
                             <NavLink
                             to={{pathname:"/duck-tales"}}
                             >
-                                <img alt="Duck Tales" style={{"max-width":"100%","max-height":"200px"}} src="https://ia.media-imdb.com/images/M/MV5BNTA2NTc5MzQwNV5BMl5BanBnXkFtZTgwOTY2ODI2MjI@._V1_SY1000_CR0,0,666,1000_AL_.jpg" />
+                                <img alt="Duck Tales" style={{"maxWidth":"100%","maxHeight":"200px"}} src="https://ia.media-imdb.com/images/M/MV5BNTA2NTc5MzQwNV5BMl5BanBnXkFtZTgwOTY2ODI2MjI@._V1_SY1000_CR0,0,666,1000_AL_.jpg" />
                             </NavLink>
                         </Grid>
                     </Grid>
