@@ -1,4 +1,10 @@
 import React, { Fragment, Component } from 'react';
+import {NavLink} from 'react-router-dom';
+import Grid from 'material-ui/Grid';
+import IconButton from 'material-ui/IconButton';
+import BackIcon from 'material-ui-icons/Backspace';
+import Header from 'Components/Header/Header';
+
 
 class IframedShows extends Component {
     constructor(props){
@@ -13,11 +19,27 @@ class IframedShows extends Component {
             };
         }
     };
-    
+
     render() {
 
         return (
             <Fragment>
+            <Header>
+                <Grid container spacing={16}>
+                    <Grid item>
+                        <p>ShuFlix</p>
+                    </Grid>
+                    <Grid item>
+                        <NavLink
+                        to={{pathname:"/videos"}}
+                        >
+                        <IconButton>
+                            <BackIcon />
+                        </IconButton>
+                        </NavLink>
+                    </Grid>
+                </Grid>
+            </Header>
             <iframe 
             title="duck-tales" 
             src="https://disneynow.go.com/shows/ducktales-disney-channel" 
@@ -26,8 +48,7 @@ class IframedShows extends Component {
             frameBorder="0"
             ref={(input)=>this.inputOnload(input)}
             
-            >
-            </iframe>
+            />
         </Fragment>
         );
     }

@@ -4,7 +4,6 @@ import Videos from 'MediaContainer/Videos/Videos';
 import Games from 'MediaContainer/Games/Games';
 import PublicRoute from 'PublicRoute';
 
-
 const MediaRouter = (props) => {
     return (
         <HashRouter>

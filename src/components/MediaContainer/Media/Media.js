@@ -13,7 +13,9 @@ const Media = (props) => {
     let {classes} = props;
     return (
         <Fragment>
-            <Header {...props} />
+            <Header {...props}>
+                <p>ShuFlix</p>
+            </Header>
             <Grid className={classes.mediaComponentWrapper} container spacing={8}>
                 <Hidden smDown>
                     <Grid item md={1}>

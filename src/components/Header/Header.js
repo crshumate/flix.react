@@ -7,7 +7,7 @@ const Header = (props) =>{
     return(
         <Fragment>
             <AppBar className={classes.header}  position="static" color="default">
-                <p>ShuFlix</p>
+                {props.children}
             </AppBar>
         </Fragment>
         )
