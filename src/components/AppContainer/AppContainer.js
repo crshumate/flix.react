@@ -1,5 +1,7 @@
 import App from './App/App';
 import { connect } from 'react-redux';
+import appUpdateActions from  'Actions/appActions/appUpdateActions';
+
 
 const mapStateToProps = (state) => {
     let props = {
@@ -10,7 +12,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, location) => {
     return {
-
+        incrementPendingAjaxCalls:()=>{
+            dispatch(appUpdateActions.updateIncrementPendingAjaxCalls())
+        },
+        decrementPendingAjaxCalls:()=>{
+            dispatch(appUpdateActions.updateDecrementPendingAjaxCalls())
+        },
     }
 }
 

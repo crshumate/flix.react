@@ -1,8 +1,12 @@
 import theme from 'Theme';
 export default {
 '@global': {
-        body:{
-            fontFamily:theme.bodyFont
+        'html,body':{
+            fontFamily:theme.bodyFont,
+            height:'100%'
+        },
+        '#app':{
+            height:'100%'
         }
     }
 };

@@ -13,30 +13,43 @@ class App extends Component {
             loadedComponent:null,
             params:props.match.params
         };
+        this.mounted=false;
         this.getComponent();
-    }
+    };
+
+    importComponent(componentPath) {
+        import (`Components/${componentPath}`).then((loadedComponent) => {
+            this.setState(() => {
+                return {
+                    loadedComponent: loadedComponent.default
+                }
+
+            });
+
+        }, function(err) {
+            console.log('failed', err);
+        });
+    };
 
     getComponent() {
         let componentPath;
         let {params} = this.state;
         if (params.module === 'videos') {
             componentPath = 'MediaContainer/MediaContainer';
-        }else{
-            //don't import
-            return null;
+            this.importComponent(componentPath);
+        }else {
+            //only run setState if component is mounted.
+            if (this.mounted) {
+                //actively clear out loaded component if there is no match...
+                this.setState(() => {
+                    return {
+                        loadedComponent: null
+                    }
+                });
+            }
+
         }
 
-        import(`Components/${componentPath}`).then((loadedComponent) => {
-                this.setState(()=>{
-                    return{
-                        loadedComponent:loadedComponent.default
-                    }
-                    
-                });
-                
-        }, function(err) {
-            console.log('failed', err);
-        });
     }
 
     static getDerivedStateFromProps(newProps,prevState) {
@@ -51,6 +64,9 @@ class App extends Component {
             this.getComponent();    
         }
                 
+    };
+    componentDidMount(){
+        this.mounted=true;
     };
     render() {
         

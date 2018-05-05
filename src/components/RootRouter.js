@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Fragment} from 'react';
 import { HashRouter, Route, Redirect, Switch } from 'react-router-dom';
 import AppContainer from 'Components/AppContainer/AppContainer';
 
@@ -39,13 +39,13 @@ const Router = () => {
 
     return (
         <HashRouter>
-            <div>
+            <Fragment>
                 <Switch>
                     <Route path="/:module/*" component={AppContainer} />
                     <Route path="/:module" component={AppContainer} />
                     <Redirect exact from='/' to='/videos'/>
                 </Switch>
-            </div>
+            </Fragment>
         </HashRouter>
     );
 };

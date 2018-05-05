@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Grid from 'material-ui/Grid';
+import {NavLink} from 'react-router-dom';
 import injectSheet from 'react-jss';
 import videoStyles from './video.style';
 import VideoPlaylistCard from './VideoPlaylistCard';
@@ -9,6 +10,7 @@ import VideoPlaylistContent from './VideoPlaylistContent';
 import IconButton from 'material-ui/IconButton';
 import ClearIcon from 'material-ui-icons/Backspace';
 import ReloadIcon from 'material-ui-icons/Refresh';
+
 
 class Videos extends Component {
     constructor(props) {
@@ -110,6 +112,17 @@ class Videos extends Component {
                             </IconButton>
                     </Grid>
                 </Grid> 
+                <ToggleDisplay if={!this.state.activePlaylistTitle}>
+                    <Grid container>
+                        <Grid item xs={12} sm={6} md={4}>
+                            <NavLink
+                            to={{pathname:"/duck-tales"}}
+                            >
+                                <img alt="Duck Tales" style={{"max-width":"100%","max-height":"200px"}} src="https://ia.media-imdb.com/images/M/MV5BNTA2NTc5MzQwNV5BMl5BanBnXkFtZTgwOTY2ODI2MjI@._V1_SY1000_CR0,0,666,1000_AL_.jpg" />
+                            </NavLink>
+                        </Grid>
+                    </Grid>
+                </ToggleDisplay>
                 <Grid container spacing={8} className={classes.gridWrapper}>
                     <Repeat 
                         dataToMap={state.playlists}
