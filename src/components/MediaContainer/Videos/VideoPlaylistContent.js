@@ -1,11 +1,12 @@
-import React,{Component,Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
 import VideoModal from './VideoModal';
 import VideoCard from './VideoCard';
 import Grid from 'material-ui/Grid';
 import ToggleDisplay from 'Common/ToggleDisplay';
 import Repeat from 'Common/Repeat';
-class VideoPlaylistContent extends Component{
-    constructor(props){
+import videoSvc from 'Services/video';
+class VideoPlaylistContent extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             videoId: null,
@@ -14,6 +15,21 @@ class VideoPlaylistContent extends Component{
         this.openVideoModal = this.openVideoModal.bind(this);
 
     };
+    createVideoObj(video){
+        const { videos } = this.props;
+        let videoObj;
+        videos.forEach((v, idx) => {
+            let vId = v.contentDetails.videoId;
+            let videoId = video.contentDetails.videoId;
+            if (vId === videoId) {
+                videoObj  = videoSvc.createVideoObj(videos,idx);
+            }
+        });
+        return videoObj;
+
+    };
+    
+    
 
     openVideoModal = (id) => {
         this.setState(() => {
@@ -32,13 +48,14 @@ class VideoPlaylistContent extends Component{
             }
         });
     };
-    render(){
+    render() {
         let { state, props } = this;
-        return(
+        return (
             <Fragment>
                 <Grid container spacing={8}>
                     <Repeat 
                     dataToMap={props.videos}
+                    preprocess={(video)=>this.createVideoObj(video)}
                     >
                         {(video,key)=>{
                             return(
@@ -62,7 +79,7 @@ class VideoPlaylistContent extends Component{
             </Fragment>
         );
     }
-    
+
 };
 
 export default VideoPlaylistContent;
