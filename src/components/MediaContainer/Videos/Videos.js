@@ -91,7 +91,6 @@ class Videos extends Component {
         }
     };
 
-
     render() {
         let { props, state } = this;
         let { classes } = props;

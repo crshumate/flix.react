@@ -35,10 +35,6 @@ export default {
         }
 
     },
-    iframedVideo: {
-        display: 'block',
-        margin: ['5%', 'auto', 0]
-    },
     closeIconWrapper: {
         float: 'right'
     },
@@ -58,7 +54,7 @@ export default {
         marginLeft:15
     },
     youtubeWrapper:{
-        margin:["5%","auto",0],
+        margin:["5%", "auto", 0],
         display:"block"
     }
 };
