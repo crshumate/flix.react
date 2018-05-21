@@ -56,5 +56,9 @@ export default {
     clearIconWrapper:{
         marginBottom:20,
         marginLeft:15
+    },
+    youtubeWrapper:{
+        margin:["5%","auto",0],
+        display:"block"
     }
 };

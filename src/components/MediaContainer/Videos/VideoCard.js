@@ -12,7 +12,7 @@ const VideoCard = (props) => {
             <Grid item xs={12} sm={6} md={4} >
                 <Card 
                     className={classes.videoCard}  
-                    onClick={()=>props.openVideoModal(video.contentDetails.videoId)} 
+                    onClick={()=>props.openVideoModal(props.video)} 
                     >
                     <CardMedia
                         className={classes.videoThumb}

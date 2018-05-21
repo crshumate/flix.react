@@ -9,7 +9,7 @@ class VideoPlaylistContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            videoId: null,
+            video:null,
             showVideoModal: false
         }
         this.openVideoModal = this.openVideoModal.bind(this);
@@ -17,25 +17,16 @@ class VideoPlaylistContent extends Component {
     };
     createVideoObj(video){
         const { videos } = this.props;
-        let videoObj;
-        videos.forEach((v, idx) => {
-            let vId = v.contentDetails.videoId;
-            let videoId = video.contentDetails.videoId;
-            if (vId === videoId) {
-                videoObj  = videoSvc.createVideoObj(videos,idx);
-            }
-        });
-        return videoObj;
-
+        return videoSvc.getVideoObj(videos, video);
     };
     
     
 
-    openVideoModal = (id) => {
+    openVideoModal = (video) => {
         this.setState(() => {
             return {
                 showVideoModal: true,
-                videoId: id
+                video:video,
             }
 
         });
@@ -44,7 +35,7 @@ class VideoPlaylistContent extends Component {
         this.setState(() => {
             return {
                 showVideoModal: false,
-                videoId: null
+                video:null,
             }
         });
     };
@@ -71,9 +62,9 @@ class VideoPlaylistContent extends Component {
                 <ToggleDisplay if={state.showVideoModal}> 
                         <VideoModal 
                             {...props} 
-                            showVideoModal={this.state.showVideoModal} 
+                            showVideoModal={state.showVideoModal} 
                             closeVideoModal={this.closeVideoModal} 
-                            videoId={state.videoId}
+                            video={state.video}
                             />
                 </ToggleDisplay>
             </Fragment>
