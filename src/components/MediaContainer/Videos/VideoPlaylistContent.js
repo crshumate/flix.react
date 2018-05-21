@@ -1,25 +1,32 @@
-import React,{Component,Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
 import VideoModal from './VideoModal';
 import VideoCard from './VideoCard';
 import Grid from 'material-ui/Grid';
 import ToggleDisplay from 'Common/ToggleDisplay';
 import Repeat from 'Common/Repeat';
-class VideoPlaylistContent extends Component{
-    constructor(props){
+import videoSvc from 'Services/video';
+class VideoPlaylistContent extends Component {
+    constructor(props) {
         super(props);
         this.state = {
-            videoId: null,
+            video:null,
             showVideoModal: false
         }
         this.openVideoModal = this.openVideoModal.bind(this);
 
     };
+    createVideoObj(video){
+        const { videos } = this.props;
+        return videoSvc.getVideoObj(videos, video);
+    };
+    
+    
 
-    openVideoModal = (id) => {
+    openVideoModal = (video) => {
         this.setState(() => {
             return {
                 showVideoModal: true,
-                videoId: id
+                video:video,
             }
 
         });
@@ -28,17 +35,18 @@ class VideoPlaylistContent extends Component{
         this.setState(() => {
             return {
                 showVideoModal: false,
-                videoId: null
+                video:null,
             }
         });
     };
-    render(){
+    render() {
         let { state, props } = this;
-        return(
+        return (
             <Fragment>
                 <Grid container spacing={8}>
                     <Repeat 
                     dataToMap={props.videos}
+                    preprocess={(video)=>this.createVideoObj(video)}
                     >
                         {(video,key)=>{
                             return(
@@ -54,15 +62,15 @@ class VideoPlaylistContent extends Component{
                 <ToggleDisplay if={state.showVideoModal}> 
                         <VideoModal 
                             {...props} 
-                            showVideoModal={this.state.showVideoModal} 
+                            showVideoModal={state.showVideoModal} 
                             closeVideoModal={this.closeVideoModal} 
-                            videoId={state.videoId}
+                            video={state.video}
                             />
                 </ToggleDisplay>
             </Fragment>
         );
     }
-    
+
 };
 
 export default VideoPlaylistContent;

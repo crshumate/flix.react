@@ -11,7 +11,6 @@ import IconButton from 'material-ui/IconButton';
 import ClearIcon from 'material-ui-icons/Backspace';
 import ReloadIcon from 'material-ui-icons/Refresh';
 
-
 class Videos extends Component {
     constructor(props) {
         super(props);
@@ -85,12 +84,11 @@ class Videos extends Component {
             playlistsContent: newProps.videos
         }
     };
+
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
             this.setLoadedVideos();
         }
-
-
     };
 
     render() {
